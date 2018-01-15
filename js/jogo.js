@@ -3,24 +3,30 @@ canvas.width = 480;
 canvas.height = 320;
 var contexto = canvas.getContext("2d");
 
-//##### TESTE #####
-//criando um retangulo vermelho
-contexto.beginPath();
-contexto.rect(20, 40, 50, 50);
-contexto.fillStyle = "#FF0000";
-contexto.fill();
-contexto.closePath();
+var x = canvas.width/2;
+var y = canvas.height-30;
+var dx = 2;
+var dy = -2;
+var raioBola = 10;
 
-//criando um circulo verde
-contexto.beginPath();
-contexto.arc(80, 160, 25, 0, 2*Math.PI, false);
-contexto.fillStyle = "green";
-contexto.fill();
-contexto.closePath();
+function desenhaBola(){
+	contexto.beginPath();
+	contexto.arc(x, y, raioBola, 0, Math.PI*2);
+	contexto.fillStyle = "blue";
+	contexto.fill();
+	contexto.closePath();
+}
 
-//criando um retangulo azul vazio
-contexto.beginPath();
-contexto.rect(80, 5, 100, 50);
-contexto.strokeStyle = "blue";
-contexto.stroke();
-contexto.closePath();
+function desenha(){
+	contexto.clearRect(0, 0, canvas.width, canvas.height);
+	desenhaBola();
+	if(x <= raioBola || x >= canvas.width-raioBola){
+		dx *= -1;
+	}
+	if(y <= raioBola || y >= canvas.height-raioBola){
+		dy *= -1;
+	}
+	x += dx;
+	y += dy;
+}
+setInterval(desenha, 10);
